@@ -14,4 +14,6 @@ jobs:
       - uses: jpf-okteto/okteto-oidc-token@main
         with:
           url: ${{ secrets.OKTETO_URL }}
-      - run: okteto namespace list
+      - uses: docker://ghcr.io/okteto/okteto:stable
+        with:
+          args: okteto namespace list

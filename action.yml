@@ -18,8 +18,6 @@ runs:
           const token = await core.getIDToken(process.env.AUDIENCE)
           core.setSecret(token)
           core.exportVariable('OKTETO_TOKEN', token)
-    - run: curl https://get.okteto.com -sSfL | sh
-      shell: bash
     - run: echo "OKTETO_URL=$URL" >> "$GITHUB_ENV"
       shell: bash
       env:
