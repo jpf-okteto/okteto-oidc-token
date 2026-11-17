@@ -1,0 +1,13 @@
+version: 2.1
+
+jobs:
+  namespaces:
+    docker:
+      - image: ghcr.io/okteto/okteto:stable
+    steps:
+      - run: OKTETO_TOKEN=$(circleci run oidc get --aud "$AUDIENCE") okteto namespace list
+
+workflows:
+  okteto:
+    jobs:
+      - namespaces
