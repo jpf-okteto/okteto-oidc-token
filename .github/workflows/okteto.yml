@@ -11,9 +11,16 @@ jobs:
   namespaces:
     runs-on: ubuntu-latest
     steps:
-      - uses: jpf-okteto/okteto-oidc-token@main
+      - uses: actions/github-script@v9
+        env:
+          AUDIENCE: ${{ secrets.AUDIENCE }}
         with:
-          url: ${{ secrets.OKTETO_URL }}
+          script: |
+            const token = await core.getIDToken(process.env.AUDIENCE)
+            core.setSecret(token)
+            core.exportVariable('OKTETO_TOKEN', token)
       - uses: docker://ghcr.io/okteto/okteto:stable
+        env:
+          OKTETO_URL: ${{ secrets.OKTETO_URL }}
         with:
           args: okteto namespace list
